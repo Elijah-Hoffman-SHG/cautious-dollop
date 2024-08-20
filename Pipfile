@@ -1,0 +1,43 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[[source]]
+url = "https://download.pytorch.org/whl/cu117"
+verify_ssl = true
+name = "downloadpytorch"
+
+[[source]]
+url = "http://mlregistry.sandhills.int:7974/simple"
+verify_ssl = false
+name = "mlregistrysandhills"
+
+[packages]
+pandas = "*"
+pyarrow = "*"
+numpy = "*"
+httpx = {extras = ["http2"], version = "*"}
+ipykernel = "*"
+pyodbc = "*"
+pymssql = "*"
+google-cloud-bigquery = "*"
+db-dtypes = "*"
+# Other commonly used packages:
+#torch = {version="*", index="downloadpytorch"}
+#torchvision = {version="*", index="downloadpytorch"}
+#torchaudio = {version="*", index="downloadpytorch"}
+qdrant-client = "*"
+scikit-learn = "*"
+transformers = "*"
+nltk = "*"
+redis = "*"
+torch = "*"
+py-framework = {extras = ["bis"], version = "*", index = "mlregistrysandhills"}
+neo4j = "*"
+smtp2go = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"
