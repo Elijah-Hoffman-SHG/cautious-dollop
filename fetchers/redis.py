@@ -3,6 +3,7 @@ import redis
 import pandas as pd
 import json
 from datetime import datetime, timedelta, time
+from email_sender import EmailRow,EmailSection
 from fetchers import FetcherBase
 
 class RedisFetch(FetcherBase):
@@ -56,14 +57,19 @@ class RedisFetch(FetcherBase):
         res = {}
         conn_names = [self.lnk_hostname, self.saw_hostname]
         for i, conn in enumerate(self.conns):
+            res.setdefault(conn_names[i], {})
             print('Starting Redis Count')
             start_time = datetime.now()
          
             iterat = conn.scan_iter(match=f"{self.key_prefix}{key}",count=10000)
             keys = list(iterat)
             email_keys_list = [key for key in keys if '@' in key.decode('utf-8')]
-            res.update({f"total keys for {conn_names[i]}": len(keys)})
-            res.update({f"email keys for {conn_names[i]}" :len(email_keys_list)})
+            #! todo maybe push to an array so the result wil be 
+            # 'neo4j://siml105:7687': [44, 20909],
+            #'neo4j://wiml105:7687': [44, 20909]
+            res[conn_names[i]]['Email'] =len(email_keys_list)
+            res[conn_names[i]]['CRMID'] = len(keys) - len(email_keys_list)
+            res[conn_names[i]]['Total'] = len(keys)
             print(len(email_keys_list))
             print(f"Took {datetime.now() - start_time}")
             print(len(keys))
@@ -87,5 +93,7 @@ class RedisFetch(FetcherBase):
             b= conn.get(self.key_prefix)
             print(b)
         return
+        
+
 
 

@@ -29,7 +29,6 @@ class Neo4jFetch:
             if res and res[0] and res[0][0]:
 
                 return {
-                    "Server": "Count",
                     self.lnk_connection.get('uri') : res[0][0]['total'],
                     self.saw_connection.get('uri') : res[1][0]['total'],
                 }

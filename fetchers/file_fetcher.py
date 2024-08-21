@@ -45,11 +45,11 @@ class FileFetch(FetcherBase):
             df = pd.read_csv(file_path)
             reason_counts = df['reason'].value_counts()
             counts_dict = {
-                'Failure Type:': 'Count:',
-                'Total':df.shape[0]}
+                'Total':df.shape[0]
+                }
             counts_dict.update(reason_counts.to_dict())
             print(counts_dict)
-            return counts_dict
+            return {"":counts_dict}
         else:
             print(f"File not found: {file_path}")
             return 0
